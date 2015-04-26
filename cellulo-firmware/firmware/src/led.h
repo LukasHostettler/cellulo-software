@@ -9,8 +9,13 @@
 #ifndef LED_H
 #define	LED_H
 
+#include "driver/spi/drv_spi.h"   // SYS function prototypes
+
 #define LOW_NIBBLE_MASK 0x000F
 #define LOW_BYTE_MASK 0x00FF
+
+#define LED_XLAT_PORT_CHANNEL PORT_CHANNEL_C
+#define LED_XLAT_PORT_BIT_POS PORTS_BIT_POS_14
 
 /**
  * @brief Describes a sequence of 6 RGB leds, each with 12-bit brightness
@@ -62,7 +67,25 @@ typedef union{
     unsigned int buffer[7];
 } LEDObject;
 
-extern LEDObject leds;    ///< The one and only LED object
+/**
+ * Initializes user interface LED functionality
+ */
+void APP_LED_Initialize();
+
+/**
+ * Performs regular user interface LED tasks
+ */
+void APP_LED_Tasks();
+
+/**
+ * Starts sending current LED data to driver
+ */
+void sendLEDData();
+
+/**
+ * Latches current LED data in the driver
+ */
+void latchLEDData();
 
 /**
  * @brief Sets the LED0 brightness, gets updated in the next cycle

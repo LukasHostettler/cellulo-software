@@ -59,7 +59,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "system/common/sys_module.h"
-#include "driver/spi/drv_spi.h"   // SYS function prototypes
 
 #include "led.h"
 
@@ -69,63 +68,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-DRV_SPI_BUFFER_HANDLE bufHandle;
-DRV_HANDLE spiHandle;
-
-unsigned char complete = 1;
-
-/*void APP_MyBufferEventHandler( DRV_SPI_BUFFER_EVENT event,
-                               DRV_SPI_BUFFER_HANDLE bufferHandle,
-                               uintptr_t context )
-{
-    int i;
-    switch(event)
-    {
-        case DRV_SPI_BUFFER_EVENT_COMPLETE:
-            
-            for(i=0;i<10;i++)
-                Nop();
-            PORTCbits.RC14 = 1;
-            for(i=0;i<10;i++)
-                Nop();
-            PORTCbits.RC14 = 0;
-            complete = 1;
-            break;
-
-        case DRV_SPI_BUFFER_EVENT_ERROR:
-        default:
-
-            Nop();
-            break;
-    }
-}*/
-
-
 int main ( void )
 {
     /* Initialize all MPLAB Harmony modules, including application(s). */
     SYS_Initialize ( NULL );
 
-    spiHandle = DRV_SPI_Open(DRV_SPI_INDEX_0, DRV_IO_INTENT_WRITE);
-    if(spiHandle == DRV_HANDLE_INVALID){
-        Nop();
-    }
-
-    setLED0(500,0,0);
-    setLED1(500,0,0);
-    setLED2(500,0,0);
-    setLED3(500,0,0);
-    setLED4(500,0,0);
-    setLED5(500,0,0);
-    //leds.leds.led5green = 0xFFF;
-    //leds.leds.led5red = 0xFFF;
-    //leds.leds.led5green = 0xFFF;
-
-
-    bufHandle = DRV_SPI_BufferAddWrite(spiHandle, (void*)&leds.buffer, 4*7, NULL, NULL);//(DRV_SPI_BUFFER_EVENT_HANDLER)APP_MyBufferEventHandler, NULL);
-    if(bufHandle == DRV_SPI_BUFFER_HANDLE_INVALID){
-        Nop();
-    }
+    APP_LED_Initialize();
 
     while ( true )
     {
@@ -133,9 +81,7 @@ int main ( void )
         /* Maintain state machines of all polled MPLAB Harmony modules. */
         SYS_Tasks ( );
 
-        int i;
-        for(i=0;i<10000000;i++)
-            Nop();
+        APP_LED_Tasks();
     }
 
     /* Execution should not come here during normal operation */

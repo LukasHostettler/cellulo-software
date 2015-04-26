@@ -74,15 +74,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 void __ISR(_SPI1_TX_VECTOR, ipl1AUTO) _IntHandlerSPITxInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);
-
-
-    int i;
-    for(i=0;i<1000000;i++)
-                Nop();
-            PORTCbits.RC14 = 1;
-            for(i=0;i<10;i++)
-                Nop();
-            PORTCbits.RC14 = 0;
 }
  
 /*******************************************************************************

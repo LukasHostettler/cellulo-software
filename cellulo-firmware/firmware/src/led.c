@@ -9,6 +9,52 @@
 #include"led.h"
 
 LEDObject leds;
+char awaitingLatch;
+DRV_HANDLE spiHandle;
+DRV_SPI_BUFFER_HANDLE bufHandle;
+
+void APP_LED_Initialize(){
+    spiHandle = DRV_SPI_Open(DRV_SPI_INDEX_0, DRV_IO_INTENT_WRITE);
+    if(spiHandle == DRV_HANDLE_INVALID){
+        Nop(); //TODO: Throw exception
+    }
+
+    awaitingLatch = 0;
+
+    int i;
+    for(i=0;i<7;i++)
+        leds.buffer[i] = 0;
+
+    sendLEDData();
+}
+
+void APP_LED_Tasks(){
+    if(awaitingLatch)
+        if(DRV_SPI_BUFFER_EVENT_COMPLETE & DRV_SPI_BufferStatus(bufHandle)){
+            latchLEDData();
+            awaitingLatch = 0;
+        }
+}
+
+void latchLEDData(){
+    int i=0;
+    for(;i<6400;i++)
+        Nop();
+    PLIB_PORTS_PinSet(PORTS_ID_0, LED_XLAT_PORT_CHANNEL, LED_XLAT_PORT_BIT_POS);
+    Nop(); Nop(); Nop(); Nop(); Nop(); Nop(); //Wait 30ns
+    PLIB_PORTS_PinClear(PORTS_ID_0, LED_XLAT_PORT_CHANNEL, LED_XLAT_PORT_BIT_POS);
+}
+
+void sendLEDData(){
+    int i;
+    for(i=0;i<7;i++){
+        bufHandle = DRV_SPI_BufferAddWrite(spiHandle, (void*)&leds.buffer[i], 4, NULL, NULL);
+        if(bufHandle == DRV_SPI_BUFFER_HANDLE_INVALID){
+            Nop();
+        }
+    }
+    awaitingLatch = 1;
+}
 
 void setLED0(unsigned short red, unsigned short green, unsigned short blue){
     leds.leds.led0red = red;
