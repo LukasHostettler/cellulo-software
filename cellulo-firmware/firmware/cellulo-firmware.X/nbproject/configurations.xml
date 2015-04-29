@@ -30,6 +30,7 @@
         <itemPath>../src/app.h</itemPath>
         <itemPath>../src/led.h</itemPath>
         <itemPath>../src/i2c.h</itemPath>
+        <itemPath>../src/mt9v034.h</itemPath>
       </logicalFolder>
       <logicalFolder name="framework" displayName="framework" projectFiles="true">
         <logicalFolder name="driver" displayName="driver" projectFiles="true">

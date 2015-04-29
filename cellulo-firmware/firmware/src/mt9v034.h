@@ -10,7 +10,7 @@
 #define	MT9V034_H
 
 /*
- * I2C slave address (assuming S_CTRL_ADR1, S_CTRL_ADR0 are low)
+ * I2C slave addresses (assuming S_CTRL_ADR1, S_CTRL_ADR0 are low)
  */
 
 #define MT9V034_I2C_SLAVE_WRITE_ADDR    0x90
@@ -158,6 +158,16 @@
 #define MT9V034_REG_ADDR_BYTEWISE_ADDR                          0xF0
 
 #define MT9V034_REG_ADDR_REGISTER_LOCK                          0xFE
+
+/**
+ * @brief Defines the 16-bit MT9V034 register
+ *
+ * High byte comes before low byte as this is the way it's received from I2C
+ */
+typedef struct{
+    unsigned char highByte;
+    unsigned char lowByte;
+} MT9V034Register;
 
 #endif	/* MT9V034_H */
 

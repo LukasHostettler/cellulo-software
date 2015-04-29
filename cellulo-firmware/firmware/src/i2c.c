@@ -10,19 +10,19 @@
 
 #include <xc.h>
 
-void _I2CWriteByte(unsigned char byte){
+unsigned char _I2CWriteByte(unsigned char byte){
     if(DRV_I2C0_ByteWrite(byte)){
         DRV_I2C0_WaitForByteWriteToComplete();
-        if(!DRV_I2C0_WriteByteAcknowledged()){
-            Nop();
-        }
+        if(!DRV_I2C0_WriteByteAcknowledged())
+            return -1;
     }
-    else{
-        Nop();
-    }
+    else
+        return -2;
+
+    return 0;
 }
 
-void I2CReadBytes(unsigned char slaveAddr, unsigned char registerAddr, int n, unsigned char* buffer){
+void I2CReadBytes(unsigned char writeAddr, unsigned char registerAddr, int n, unsigned char* buffer){
 
     //Assert start sequence
     while (!DRV_I2C0_MasterBusIdle());
@@ -31,7 +31,7 @@ void I2CReadBytes(unsigned char slaveAddr, unsigned char registerAddr, int n, un
 
     //Send slave write address
     while (!DRV_I2C0_MasterBusIdle());
-    _I2CWriteByte((slaveAddr << 1) + 0);
+    _I2CWriteByte(writeAddr);
 
     //Send register address
     while (!DRV_I2C0_MasterBusIdle());
@@ -44,7 +44,7 @@ void I2CReadBytes(unsigned char slaveAddr, unsigned char registerAddr, int n, un
 
     //Send slave read address
     while (!DRV_I2C0_MasterBusIdle());
-    _I2CWriteByte((slaveAddr << 1) + 1);
+    _I2CWriteByte(writeAddr + 1);
 
     //Read n - 1 bytes with ACK in the end
     while(n > 1){
@@ -76,6 +76,42 @@ void I2CReadBytes(unsigned char slaveAddr, unsigned char registerAddr, int n, un
         DRV_I2C0_MasterNACKSend();
         while (!DRV_I2C0_WaitForACKOrNACKComplete());
     }
+
+    //Send stop sequence
+    while (!DRV_I2C0_MasterBusIdle());
+    DRV_I2C0_MasterStop();
+
+    //Stop sequence stops and restarts whole I2C module due to silicon bug
+    //so no need to wait for stop condition end
+}
+
+void I2CWriteBytes(unsigned char writeAddr, unsigned char registerAddr, int n, unsigned char* buffer){
+
+    //Assert start sequence
+    while (!DRV_I2C0_MasterBusIdle());
+    DRV_I2C0_MasterStart();
+    DRV_I2C0_WaitForStartComplete();
+
+    //Send slave write address
+    while (!DRV_I2C0_MasterBusIdle());
+    _I2CWriteByte(writeAddr);
+
+    //Send register address
+    while (!DRV_I2C0_MasterBusIdle());
+    _I2CWriteByte(registerAddr);
+
+    //Write n bytes
+    while(n > 0){
+        while (!DRV_I2C0_MasterBusIdle());
+        _I2CWriteByte(*buffer);
+        buffer++;
+        n--;
+    }
+
+    //Assert start sequence
+    while (!DRV_I2C0_MasterBusIdle());
+    DRV_I2C0_MasterStart();
+    DRV_I2C0_WaitForStartComplete();
 
     //Send stop sequence
     while (!DRV_I2C0_MasterBusIdle());

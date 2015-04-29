@@ -73,8 +73,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include"i2c.h"
+#include"mt9v034.h"
 
-unsigned char bytes[2];
+MT9V034Register reg;
 
 
 void readI2CTest(){
@@ -93,7 +94,20 @@ void readI2CTest(){
 
     Nop();
 
-    I2CReadBytes(0x48, 0x00, 2, bytes);
+    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_REGISTER_LOCK, 2, (unsigned char*)&reg);
+
+    Nop();
+
+    reg.highByte = 0xDE;
+    reg.lowByte = 0xAF;
+
+    Nop();
+
+    I2CWriteBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_REGISTER_LOCK, 2, (unsigned char*)&reg);
+
+    Nop();
+
+    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_REGISTER_LOCK, 2, (unsigned char*)&reg);
 
     Nop();
 }
