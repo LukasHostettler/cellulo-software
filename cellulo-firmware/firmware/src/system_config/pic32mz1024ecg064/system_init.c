@@ -152,6 +152,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     .jobQueueReserveSize = DRV_SPI_RESERVED_JOB_IDX0,
  };
 // </editor-fold>
+//<editor-fold defaultstate="collapsed" desc="DRV_I2C Configuration">
+// </editor-fold>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -224,6 +226,7 @@ void SYS_Initialize ( void* data )
     SYS_INT_VectorSubprioritySet(DRV_DRV_SPI_ERROR_INT_VECTOR_IDX0, DRV_SPI_ERROR_INT_SUB_PRIORITY_IDX0);
  
     sysObj.spiObjectIdx0 = DRV_SPI_Initialize(0, (const SYS_MODULE_INIT  * const)&drvSpi0InitData);
+    DRV_I2C0_Initialize();
 
     /* Initialize System Services */
     SYS_INT_Initialize();  

@@ -88,6 +88,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_CLK_BUS_PERIPHERAL_5            100000000ul
 #define SYS_CLK_BUS_PERIPHERAL_7            200000000ul
 #define SYS_CLK_BUS_PERIPHERAL_8            100000000ul
+#define SYS_CLK_BUS_REFERENCE_4             13001523ul
 #define SYS_CLK_CONFIG_PRIMARY_XTAL         24000000ul
 #define SYS_CLK_CONFIG_SECONDARY_XTAL       0ul
    
@@ -107,6 +108,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_PORT_C_CNPD         0x0
 #define SYS_PORT_C_CNEN         0x0
 
+#define SYS_PORT_D_ANSEL        0x0
+#define SYS_PORT_D_TRIS         0xe3b
+#define SYS_PORT_D_LAT          0x4
+#define SYS_PORT_D_ODC          0x0
+#define SYS_PORT_D_CNPU         0x0
+#define SYS_PORT_D_CNPD         0x0
+#define SYS_PORT_D_CNEN         0x0
+
 #define SYS_PORT_E_ANSEL        0x10
 #define SYS_PORT_E_TRIS         0xff
 #define SYS_PORT_E_LAT          0x0
@@ -114,6 +123,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_PORT_E_CNPU         0x0
 #define SYS_PORT_E_CNPD         0x0
 #define SYS_PORT_E_CNEN         0x0
+
+#define SYS_PORT_F_ANSEL        0x0
+#define SYS_PORT_F_TRIS         0x3a
+#define SYS_PORT_F_LAT          0x0
+#define SYS_PORT_F_ODC          0x0
+#define SYS_PORT_F_CNPU         0x0
+#define SYS_PORT_F_CNPD         0x0
+#define SYS_PORT_F_CNEN         0x0
 
 
  
@@ -138,6 +155,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
+
 
 
 /*** SPI Driver Configuration ***/
@@ -178,9 +196,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define DRV_DRV_SPI_ERROR_INT_VECTOR_IDX0       INT_VECTOR_SPI1_FAULT
 #define DRV_SPI_TX_INT_PRIORITY_IDX0 		INT_PRIORITY_LEVEL1
 #define DRV_SPI_TX_INT_SUB_PRIORITY_IDX0 	INT_SUBPRIORITY_LEVEL0
-#define DRV_SPI_RX_INT_PRIORITY_IDX0 		INT_DISABLE_INTERRUPT
+#define DRV_SPI_RX_INT_PRIORITY_IDX0 		INT_PRIORITY_LEVEL1
 #define DRV_SPI_RX_INT_SUB_PRIORITY_IDX0 	INT_SUBPRIORITY_LEVEL0
-#define DRV_SPI_ERROR_INT_PRIORITY_IDX0 	INT_DISABLE_INTERRUPT
+#define DRV_SPI_ERROR_INT_PRIORITY_IDX0 	INT_PRIORITY_LEVEL1
 #define DRV_SPI_ERROR_INT_SUB_PRIORITY_IDX0 	INT_SUBPRIORITY_LEVEL0
 #define DRV_SPI_QUEUE_SIZE_IDX0 		10
 #define DRV_SPI_RESERVED_JOB_IDX0 		1

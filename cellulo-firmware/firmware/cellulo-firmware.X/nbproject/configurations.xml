@@ -12,6 +12,11 @@
                          displayName="pic32mz1024ecg064"
                          projectFiles="true">
             <logicalFolder name="framework" displayName="framework" projectFiles="true">
+              <logicalFolder name="driver" displayName="driver" projectFiles="true">
+                <logicalFolder name="i2c" displayName="i2c" projectFiles="true">
+                  <itemPath>../src/system_config/pic32mz1024ecg064/framework/driver/i2c/drv_i2c_static.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
               <logicalFolder name="system" displayName="system" projectFiles="true">
                 <logicalFolder name="clk" displayName="clk" projectFiles="true">
                   <itemPath>../src/system_config/pic32mz1024ecg064/framework/system/clk/sys_clk_static.h</itemPath>
@@ -24,6 +29,7 @@
         </logicalFolder>
         <itemPath>../src/app.h</itemPath>
         <itemPath>../src/led.h</itemPath>
+        <itemPath>../src/i2c.h</itemPath>
       </logicalFolder>
       <logicalFolder name="framework" displayName="framework" projectFiles="true">
         <logicalFolder name="driver" displayName="driver" projectFiles="true">
@@ -73,6 +79,11 @@
                          projectFiles="true">
             <logicalFolder name="framework" displayName="framework" projectFiles="true">
               <logicalFolder name="driver" displayName="driver" projectFiles="true">
+                <logicalFolder name="i2c" displayName="i2c" projectFiles="true">
+                  <logicalFolder name="src" displayName="src" projectFiles="true">
+                    <itemPath>../src/system_config/pic32mz1024ecg064/framework/driver/i2c/src/drv_i2c_static.c</itemPath>
+                  </logicalFolder>
+                </logicalFolder>
                 <logicalFolder name="spi" displayName="spi" projectFiles="true">
                   <logicalFolder name="dynamic" displayName="dynamic" projectFiles="true">
                     <itemPath>../src/system_config/pic32mz1024ecg064/framework/driver/spi/dynamic/drv_spi_tasks.c</itemPath>
@@ -101,6 +112,7 @@
         <itemPath>../src/app.c</itemPath>
         <itemPath>../src/main.c</itemPath>
         <itemPath>../src/led.c</itemPath>
+        <itemPath>../src/i2c.c</itemPath>
       </logicalFolder>
       <logicalFolder name="framework" displayName="framework" projectFiles="true">
         <logicalFolder name="driver" displayName="driver" projectFiles="true">

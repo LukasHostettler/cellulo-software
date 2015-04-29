@@ -50,7 +50,7 @@ void sendLEDData(){
     for(i=0;i<7;i++){
         bufHandle = DRV_SPI_BufferAddWrite(spiHandle, (void*)&leds.buffer[i], 4, NULL, NULL);
         if(bufHandle == DRV_SPI_BUFFER_HANDLE_INVALID){
-            Nop();
+            Nop(); //TODO: Throw exception
         }
     }
     awaitingLatch = 1;

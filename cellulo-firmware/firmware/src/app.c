@@ -55,6 +55,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 #include "driver/spi/drv_spi.h"
+#include "driver/i2c/drv_i2c.h"
+
+#include <xc.h>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -112,14 +115,12 @@ APP_DATA appData;
     See prototype in app.h.
  */
 
+
+
 void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-    
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
 }
 
 

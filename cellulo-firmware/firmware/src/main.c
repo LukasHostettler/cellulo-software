@@ -62,11 +62,41 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "led.h"
 
+#include "system_definitions.h"
+
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
 // *****************************************************************************
 // *****************************************************************************
+
+#include"i2c.h"
+
+unsigned char bytes[2];
+
+
+void readI2CTest(){
+
+    PORTFbits.RF0 = 0;
+    PORTDbits.RD2 = 0;
+
+    int i;
+    for(i=0;i<100000000;i++)
+        Nop();
+
+    PORTDbits.RD2 = 1;
+
+    for(i=0;i<100000000;i++)
+        Nop();
+
+    Nop();
+
+    I2CReadBytes(0x48, 0x00, 2, bytes);
+
+    Nop();
+}
 
 int main ( void )
 {
@@ -75,6 +105,8 @@ int main ( void )
 
     APP_LED_Initialize();
 
+    readI2CTest();
+
     while ( true )
     {
 
@@ -82,6 +114,8 @@ int main ( void )
         SYS_Tasks ( );
 
         APP_LED_Tasks();
+
+        
     }
 
     /* Execution should not come here during normal operation */

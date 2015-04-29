@@ -125,10 +125,18 @@ void SYS_CLK_Initialize( const SYS_CLK_INIT const * clkInit )
     PLIB_OSC_ReferenceOscDisable ( OSC_ID_0, OSC_REFERENCE_3 );
     /* Disable REFCLK3_OE*/
     PLIB_OSC_ReferenceOutputDisable ( OSC_ID_0, OSC_REFERENCE_3 );
-    /* Disable REFCLKO4*/
-    PLIB_OSC_ReferenceOscDisable ( OSC_ID_0, OSC_REFERENCE_4 );
+    /* Enable and configure REFCLKO4*/
+    
+    /* ROSEL System Clock SYSCLK */
+    PLIB_OSC_ReferenceOscBaseClockSelect ( OSC_ID_0, OSC_REFERENCE_4, 0 );
+    /* RODIV */
+    PLIB_OSC_ReferenceOscDivisorValueSet ( OSC_ID_0, OSC_REFERENCE_4, 7 );
+    /* ROTRIM */
+    PLIB_OSC_ReferenceOscTrimSet ( OSC_ID_0, OSC_REFERENCE_4, 354 );
+
+    PLIB_OSC_ReferenceOscEnable ( OSC_ID_0, OSC_REFERENCE_4 );
     /* Disable REFCLK4_OE*/
-    PLIB_OSC_ReferenceOutputDisable ( OSC_ID_0, OSC_REFERENCE_4 );
+    PLIB_OSC_ReferenceOutputEnable ( OSC_ID_0, OSC_REFERENCE_4 );
 
     SYS_DEVCON_SystemLock ( );
 }
@@ -279,6 +287,7 @@ inline uint32_t SYS_CLK_ReferenceClockFrequencyGet ( CLK_BUSES_REFERENCE referen
         case CLK_BUS_REFERENCE_3:
             break;
         case CLK_BUS_REFERENCE_4:
+                freq = SYS_CLK_BUS_REFERENCE_4;
             break;
     }
     

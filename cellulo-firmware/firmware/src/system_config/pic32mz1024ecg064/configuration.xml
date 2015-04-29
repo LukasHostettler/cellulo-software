@@ -84,7 +84,17 @@
     <Template>
       <Name>system_definitions.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>A4796179E94768721EB6E528E19188DE</Checksum>
+      <Checksum>443E27D86ACEB63A6CF7A474C07D32E1</Checksum>
+    </Template>
+    <Template>
+      <Name>drv_i2c_static.h</Name>
+      <Path>app/system_config/pic32mz1024ecg064/framework/driver/i2c</Path>
+      <Checksum>23F319F0297DA194B95178EED6DB36DE</Checksum>
+    </Template>
+    <Template>
+      <Name>drv_i2c_static.c</Name>
+      <Path>app/system_config/pic32mz1024ecg064/framework/driver/i2c/src</Path>
+      <Checksum>4DB7A58FF4EF4181D40819319E5A8607</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.h</Name>
@@ -94,7 +104,7 @@
     <Template>
       <Name>system_init.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>1DDA5F817E1F886783F34D50CCDBC105</Checksum>
+      <Checksum>9EEDC39A1D368684D1259AC2C99C3425</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_master_ebm_tasks.c</Name>
@@ -109,12 +119,12 @@
     <Template>
       <Name>sys_ports_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/system/ports/src</Path>
-      <Checksum>25263607F9A2A6C7A66BC562E6173CF5</Checksum>
+      <Checksum>BD70F139078BAA03FEEE3E8C374A860A</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/system/clk/src</Path>
-      <Checksum>5F55A6E768873CA10794AE5244E01C04</Checksum>
+      <Checksum>ABB1BF08FE48AB094D3B099C04671538</Checksum>
     </Template>
     <Template>
       <Name>main.c</Name>
@@ -123,7 +133,7 @@
     <Template>
       <Name>system_interrupt.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>6BF3B2A77B10682F71CFEB23249D1BCD</Checksum>
+      <Checksum>0DCA01719B92A79BAA01F807F50D7971</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_tasks.c</Name>
@@ -137,7 +147,7 @@
     <Template>
       <Name>system_config.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>A99CDE9A9A7FE5E407E3D89CA9C63BD6</Checksum>
+      <Checksum>15445DCF9F71DEBF32826C89E7868460</Checksum>
     </Template>
     <Template>
       <Name>app.c</Name>
