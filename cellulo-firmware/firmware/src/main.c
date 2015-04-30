@@ -80,34 +80,27 @@ MT9V034Register reg;
 
 void readI2CTest(){
 
-    PORTFbits.RF0 = 0;
-    PORTDbits.RD2 = 0;
+    MT9V034Reset();
 
-    int i;
-    for(i=0;i<100000000;i++)
-        Nop();
-
-    PORTDbits.RD2 = 1;
-
-    for(i=0;i<100000000;i++)
-        Nop();
+    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_CHIP_CONTROL, 2, (unsigned char*)&reg);
 
     Nop();
 
-    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_REGISTER_LOCK, 2, (unsigned char*)&reg);
+    reg.highByte = 0;
+    reg.lowByte = 0;
+
+    MT9V034Reset();
+
+    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_CHIP_CONTROL, 2, (unsigned char*)&reg);
 
     Nop();
 
-    reg.highByte = 0xDE;
-    reg.lowByte = 0xAF;
+    reg.highByte = 0;
+    reg.lowByte = 0;
+    
+    MT9V034Reset();
 
-    Nop();
-
-    I2CWriteBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_REGISTER_LOCK, 2, (unsigned char*)&reg);
-
-    Nop();
-
-    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_REGISTER_LOCK, 2, (unsigned char*)&reg);
+    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_CHIP_CONTROL, 2, (unsigned char*)&reg);
 
     Nop();
 }

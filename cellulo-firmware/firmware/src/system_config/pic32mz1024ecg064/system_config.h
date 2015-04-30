@@ -109,7 +109,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_PORT_C_CNEN         0x0
 
 #define SYS_PORT_D_ANSEL        0x0
-#define SYS_PORT_D_TRIS         0xe3b
+#define SYS_PORT_D_TRIS         0xe32
 #define SYS_PORT_D_LAT          0x4
 #define SYS_PORT_D_ODC          0x0
 #define SYS_PORT_D_CNPU         0x0

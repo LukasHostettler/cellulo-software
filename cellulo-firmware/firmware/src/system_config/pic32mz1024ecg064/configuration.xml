@@ -147,7 +147,7 @@
     <Template>
       <Name>system_config.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>15445DCF9F71DEBF32826C89E7868460</Checksum>
+      <Checksum>E87D447C444680B1F57178D74CC902A4</Checksum>
     </Template>
     <Template>
       <Name>app.c</Name>

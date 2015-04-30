@@ -9,12 +9,16 @@
 #ifndef MT9V034_H
 #define	MT9V034_H
 
+#include<xc.h>
+#include<GenericTypeDefs.h>
+
+#include"system_config/pic32mz1024ecg064/system_definitions.h"
+
 /*
- * I2C slave addresses (assuming S_CTRL_ADR1, S_CTRL_ADR0 are low)
+ * I2C slave write address (assuming S_CTRL_ADR1, S_CTRL_ADR0 are low)
  */
 
 #define MT9V034_I2C_SLAVE_WRITE_ADDR    0x90
-#define MT9V034_I2C_SLAVE_READ_ADDR     0x91
 
 /*
  * Register addresses
@@ -162,12 +166,55 @@
 /**
  * @brief Defines the 16-bit MT9V034 register
  *
- * High byte comes before low byte as this is the way it's received from I2C
+ * High byte comes before low byte as this is the order it's received from I2C
+ * and the way it should be sent to the chip through I2C
  */
 typedef struct{
     unsigned char highByte;
     unsigned char lowByte;
 } MT9V034Register;
+
+/*
+ * Port configuration
+ */
+
+#define IMG_OE_PORT_CHANNEL PORT_CHANNEL_D
+#define IMG_OE_PORT_BIT_POS PORTS_BIT_POS_0
+
+#define IMG_RESET_BAR_PORT_CHANNEL PORT_CHANNEL_D
+#define IMG_RESET_BAR_PORT_BIT_POS PORTS_BIT_POS_2
+
+#define IMG_EXPOSURE_PORT_CHANNEL PORT_CHANNEL_D
+#define IMG_EXPOSURE_PORT_BIT_POS PORTS_BIT_POS_3
+
+#define IMG_STANDBY_PORT_CHANNEL PORT_CHANNEL_F
+#define IMG_STANDBY_PORT_BIT_POS PORTS_BIT_POS_0
+
+#define PIXEL_LINE_PORT_CHANNEL PORT_CHANNEL_F
+#define PIXEL_LINE_PORT_BIT_POS PORTS_BIT_POS_1
+
+/*
+ * Access methods
+ */
+
+/**
+ * @brief Resets the sensor and clears bit 9 of CHIP CONTROL register
+ */
+void MT9V034Reset();
+
+/**
+ * @brief Modifies the standby output
+ *
+ * @param enable Whether to enable standby mode
+ */
+void MT9V034Standby(BOOL enable);
+
+/**
+ * @brief Modifies the output tri-state
+ * 
+ * @param enable Whether to enable the output
+ */
+void MT9V034OutputEnable(BOOL enable);
 
 #endif	/* MT9V034_H */
 

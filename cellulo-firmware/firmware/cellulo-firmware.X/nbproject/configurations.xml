@@ -114,6 +114,7 @@
         <itemPath>../src/main.c</itemPath>
         <itemPath>../src/led.c</itemPath>
         <itemPath>../src/i2c.c</itemPath>
+        <itemPath>../src/mt9v034.c</itemPath>
       </logicalFolder>
       <logicalFolder name="framework" displayName="framework" projectFiles="true">
         <logicalFolder name="driver" displayName="driver" projectFiles="true">
