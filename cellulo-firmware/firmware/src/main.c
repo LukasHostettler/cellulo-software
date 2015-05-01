@@ -60,11 +60,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "system/common/sys_module.h"
 
-#include "led.h"
-
-#include "system_definitions.h"
-
-
+#include"led.h"
+#include"cam.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -72,38 +69,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include"i2c.h"
-#include"mt9v034.h"
 
-MT9V034Register reg;
-
-
-void readI2CTest(){
-
-    MT9V034Reset();
-
-    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_CHIP_CONTROL, 2, (unsigned char*)&reg);
-
-    Nop();
-
-    reg.highByte = 0;
-    reg.lowByte = 0;
-
-    MT9V034Reset();
-
-    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_CHIP_CONTROL, 2, (unsigned char*)&reg);
-
-    Nop();
-
-    reg.highByte = 0;
-    reg.lowByte = 0;
-    
-    MT9V034Reset();
-
-    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_CHIP_CONTROL, 2, (unsigned char*)&reg);
-
-    Nop();
-}
 
 int main ( void )
 {
@@ -112,17 +78,23 @@ int main ( void )
 
     APP_LED_Initialize();
 
-    readI2CTest();
+    APP_Cam_Initialize();
+
+    unsigned int k;
+
+    Nop();
 
     while ( true )
     {
-
         /* Maintain state machines of all polled MPLAB Harmony modules. */
-        SYS_Tasks ( );
+        //SYS_Tasks ( );
 
-        APP_LED_Tasks();
+        //APP_LED_Tasks();
 
-        
+        //APP_Cam_Tasks();
+
+        Nop();
+        for(k=0;k<10;k++) Nop();
     }
 
     /* Execution should not come here during normal operation */
