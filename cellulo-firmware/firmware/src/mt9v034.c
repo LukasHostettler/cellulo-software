@@ -39,9 +39,46 @@ void MT9V034Standby(BOOL enable){
     }
 }
 
+
+
 void MT9V034OutputEnable(BOOL enable){
     if(enable)
         PLIB_PORTS_PinSet(PORTS_ID_0, IMG_OE_PORT_CHANNEL, IMG_OE_PORT_BIT_POS);
     else
         PLIB_PORTS_PinClear(PORTS_ID_0, IMG_OE_PORT_CHANNEL, IMG_OE_PORT_BIT_POS);
+}
+
+void MT9V034SetBinning(MT9V034_BINNING rowBin, MT9V034_BINNING colBin){
+    MT9V034Register reg;
+    I2CReadBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_READ_MODE_CONTEXT_A, 2, (unsigned char*)&reg);
+
+    switch(rowBin){
+        case MT9V034_NO_BINNING:
+            reg.lowByte = reg.lowByte & 0b11111100;
+            break;
+        case MT9V034_BIN_2:
+            reg.lowByte = (reg.lowByte & 0b11111101) | 0b00000001;
+            break;
+        case MT9V034_BIN_4:
+            reg.lowByte = (reg.lowByte & 0b11111110) | 0b00000010;
+            break;
+        default:
+            break;
+    }
+
+    switch(colBin){
+        case MT9V034_NO_BINNING:
+            reg.lowByte = reg.lowByte & 0b11110011;
+            break;
+        case MT9V034_BIN_2:
+            reg.lowByte = (reg.lowByte & 0b11110111) | 0b00000100;
+            break;
+        case MT9V034_BIN_4:
+            reg.lowByte = (reg.lowByte & 0b11111011) | 0b00001000;
+            break;
+        default:
+            break;
+    }
+    
+    I2CWriteBytes(MT9V034_I2C_SLAVE_WRITE_ADDR, MT9V034_REG_ADDR_READ_MODE_CONTEXT_A, 2, (unsigned char*)&reg);
 }

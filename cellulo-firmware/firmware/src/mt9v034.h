@@ -216,5 +216,22 @@ void MT9V034Standby(BOOL enable);
  */
 void MT9V034OutputEnable(BOOL enable);
 
+/**
+ * @brief Binning options for row and column
+ */
+typedef enum{
+    MT9V034_NO_BINNING = 0,
+    MT9V034_BIN_2,
+    MT9V034_BIN_4
+} MT9V034_BINNING;
+
+/**
+ * @brief Sets binning option
+ *
+ * @param rowBin Row binning
+ * @param colBin Column binning
+ */
+void MT9V034SetBinning(MT9V034_BINNING rowBin, MT9V034_BINNING colBin);
+
 #endif	/* MT9V034_H */
 
