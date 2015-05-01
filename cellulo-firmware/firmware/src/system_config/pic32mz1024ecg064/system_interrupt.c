@@ -71,6 +71,39 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
+#include "cam.h"
+
+unsigned int k = 0;
+
+void __ISR(_EXTERNAL_2_VECTOR, IPL7AUTO) _PIXEL_WR_Handler(void){
+    pixels[k] = PORTE;
+    k++;
+    pixels[k] = PORTE;
+    k++;
+    pixels[k] = PORTE;
+    k++;
+    pixels[k] = PORTE;
+    k++;
+    k--;
+    k--;
+    k--;
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+}
+
+void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void)
+{
+    Nop();
+    k = 0;
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_3);
+}
+
+void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void)
+{
+    Nop();
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
+}
+
+
 void __ISR(_SPI1_RX_VECTOR, ipl1AUTO) _IntHandlerSPIRxInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);

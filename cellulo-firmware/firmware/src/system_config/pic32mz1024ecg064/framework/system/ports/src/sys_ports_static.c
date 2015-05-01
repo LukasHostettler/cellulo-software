@@ -97,6 +97,9 @@ void SYS_PORTS_Initialize(void)
     PLIB_PORTS_ChannelChangeNoticePullDownEnable(PORTS_ID_0, PORT_CHANNEL_F, SYS_PORT_F_CNPD);
 
     /* PPS Input Remapping */
+    PLIB_PORTS_RemapInput(PORTS_ID_0, INPUT_FUNC_INT2, INPUT_PIN_RPD4 );
+    PLIB_PORTS_RemapInput(PORTS_ID_0, INPUT_FUNC_INT3, INPUT_PIN_RPF1 );
+    PLIB_PORTS_RemapInput(PORTS_ID_0, INPUT_FUNC_INT4, INPUT_PIN_RPD11 );
 
     /* PPS Output Remapping */
     PLIB_PORTS_RemapOutput(PORTS_ID_0, OUTPUT_FUNC_SDO1, OUTPUT_PIN_RPC13 );

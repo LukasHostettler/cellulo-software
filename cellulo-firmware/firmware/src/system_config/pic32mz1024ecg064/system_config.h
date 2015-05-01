@@ -116,7 +116,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_PORT_D_CNPD         0x0
 #define SYS_PORT_D_CNEN         0x0
 
-#define SYS_PORT_E_ANSEL        0x10
+#define SYS_PORT_E_ANSEL        0x0
 #define SYS_PORT_E_TRIS         0xff
 #define SYS_PORT_E_LAT          0x0
 #define SYS_PORT_E_ODC          0x0

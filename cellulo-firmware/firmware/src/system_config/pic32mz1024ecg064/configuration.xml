@@ -104,7 +104,7 @@
     <Template>
       <Name>system_init.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>9EEDC39A1D368684D1259AC2C99C3425</Checksum>
+      <Checksum>8BD3373AF4C012CE20ED5C7406BFC3DA</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_master_ebm_tasks.c</Name>
@@ -119,7 +119,7 @@
     <Template>
       <Name>sys_ports_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/system/ports/src</Path>
-      <Checksum>BD70F139078BAA03FEEE3E8C374A860A</Checksum>
+      <Checksum>17EF4377DCE6874EE4A96B117C0CABF5</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.c</Name>
@@ -133,7 +133,7 @@
     <Template>
       <Name>system_interrupt.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>0DCA01719B92A79BAA01F807F50D7971</Checksum>
+      <Checksum>F9DA7F76E1F5F26A649E979FE733FE1C</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_tasks.c</Name>
@@ -147,7 +147,7 @@
     <Template>
       <Name>system_config.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>E87D447C444680B1F57178D74CC902A4</Checksum>
+      <Checksum>B0C481A31CA31954184A689A8B91D3CA</Checksum>
     </Template>
     <Template>
       <Name>app.c</Name>
