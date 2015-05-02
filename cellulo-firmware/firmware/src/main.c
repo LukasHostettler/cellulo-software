@@ -62,6 +62,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include"led.h"
 #include"cam.h"
+#include"bluetooth.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -70,31 +71,41 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 
-
 int main ( void )
 {
     /* Initialize all MPLAB Harmony modules, including application(s). */
     SYS_Initialize ( NULL );
 
-    APP_LED_Initialize();
+    //APP_LED_Initialize();
 
-    APP_Cam_Initialize();
+    //APP_Cam_Initialize();
 
     unsigned int k;
+    unsigned int i;
 
-    Nop();
+    resetBluetooth();
+    forceBluetoothBaud9600(false);
+
+
 
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
-        //SYS_Tasks ( );
+        SYS_Tasks ( );
 
         //APP_LED_Tasks();
 
         //APP_Cam_Tasks();
 
+        const char str[] = "01234567890123456789012345678901234567890123456789";
+
         Nop();
-        for(k=0;k<10;k++) Nop();
+        for(i=0;i<51;i++){
+            while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+            PLIB_USART_TransmitterByteSend(USART_ID_4, str[i]);
+            //for(k=0;k<100000000;k++);
+        }
+        for(k=0;k<100000000;k++);
     }
 
     /* Execution should not come here during normal operation */

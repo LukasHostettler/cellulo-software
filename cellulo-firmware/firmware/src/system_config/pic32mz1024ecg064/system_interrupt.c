@@ -73,36 +73,41 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "cam.h"
 
-unsigned int k = 0;
+unsigned int currentRow = 0;
+unsigned int currentPixel = 0;
+unsigned char frameno = 0;
 
 void __ISR(_EXTERNAL_2_VECTOR, IPL7AUTO) _PIXEL_WR_Handler(void){
-    pixels[k] = PORTE;
-    k++;
-    pixels[k] = PORTE;
-    k++;
-    pixels[k] = PORTE;
-    k++;
-    pixels[k] = PORTE;
-    k++;
-    k--;
-    k--;
-    k--;
+    pixels[currentPixel] = PORTE;
+    currentPixel++;
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
 }
 
 void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void)
 {
-    Nop();
-    k = 0;
+    currentRow++;
+    if(currentRow >= 120)
+        PLIB_INT_SourceDisable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+    else
+        currentPixel = currentRow*IMG_WIDTH;
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_3);
 }
 
 void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void)
 {
-    Nop();
+    if(currentPixel >= 22560 && currentPixel <= 23000 && currentRow == 120){
+        frameno++;
+        if(frameno>100){
+            Nop();
+        }
+    }
+    currentRow = 0;
+    currentPixel = 0;
+    PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
 }
-
 
 void __ISR(_SPI1_RX_VECTOR, ipl1AUTO) _IntHandlerSPIRxInstance0(void)
 {
@@ -116,7 +121,7 @@ void __ISR(_SPI1_FAULT_VECTOR, ipl1AUTO) _IntHandlerSPIFaultInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);
 }
- 
+
 void __ISR(_I2C5_MASTER_VECTOR, ipl1AUTO) _IntHandlerDrvI2CMasterInstance0(void)
 {
 
@@ -133,13 +138,18 @@ void __ISR(_I2C5_BUS_VECTOR, ipl1AUTO) _IntHandlerDrvI2CErrorInstance0(void)
     /* Clear pending interrupt */
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_I2C_5_BUS);
 }
- 
- 
- 
- 
- 
- 
-  
+
+void __ISR(_UART4_TX_VECTOR, ipl1AUTO) _IntHandlerDrvUsartTransmitInstance0(void)
+{
+
+
+    /* TODO: Add code to process interrupt here */
+
+    /* Clear pending interrupt */
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_4_TRANSMIT);
+    return;
+}
+
 /*******************************************************************************
  End of File
 */

@@ -84,7 +84,7 @@
     <Template>
       <Name>system_definitions.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>443E27D86ACEB63A6CF7A474C07D32E1</Checksum>
+      <Checksum>A392EDCB2545904C026255333649DAC9</Checksum>
     </Template>
     <Template>
       <Name>drv_i2c_static.h</Name>
@@ -92,9 +92,19 @@
       <Checksum>23F319F0297DA194B95178EED6DB36DE</Checksum>
     </Template>
     <Template>
+      <Name>drv_usart_static.c</Name>
+      <Path>app/system_config/pic32mz1024ecg064/framework/driver/usart</Path>
+      <Checksum>B02910BC7BE42716AB4DEDB14A64C754</Checksum>
+    </Template>
+    <Template>
       <Name>drv_i2c_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/driver/i2c/src</Path>
       <Checksum>4DB7A58FF4EF4181D40819319E5A8607</Checksum>
+    </Template>
+    <Template>
+      <Name>drv_usart_static.h</Name>
+      <Path>app/system_config/pic32mz1024ecg064/framework/driver/usart</Path>
+      <Checksum>C0F1A35C10AB892633836B3D9B8FCA92</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.h</Name>
@@ -104,7 +114,7 @@
     <Template>
       <Name>system_init.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>8BD3373AF4C012CE20ED5C7406BFC3DA</Checksum>
+      <Checksum>FAB2C78F5E5D97959E071F592BEC3B4D</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_master_ebm_tasks.c</Name>
@@ -119,7 +129,7 @@
     <Template>
       <Name>sys_ports_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/system/ports/src</Path>
-      <Checksum>17EF4377DCE6874EE4A96B117C0CABF5</Checksum>
+      <Checksum>5707F6E6C8E8EE4749AE62749B7ED475</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.c</Name>
@@ -133,7 +143,7 @@
     <Template>
       <Name>system_interrupt.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>F9DA7F76E1F5F26A649E979FE733FE1C</Checksum>
+      <Checksum>4C222567EA5675DD4E1E661BD6493BD6</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_tasks.c</Name>
@@ -147,7 +157,7 @@
     <Template>
       <Name>system_config.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>B0C481A31CA31954184A689A8B91D3CA</Checksum>
+      <Checksum>79BA6D23B17906038AD9F7935D71E32D</Checksum>
     </Template>
     <Template>
       <Name>app.c</Name>
