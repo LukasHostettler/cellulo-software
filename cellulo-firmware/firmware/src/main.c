@@ -76,38 +76,22 @@ int main ( void )
     /* Initialize all MPLAB Harmony modules, including application(s). */
     SYS_Initialize ( NULL );
 
+    APP_BT_Initialize();
+
     //APP_LED_Initialize();
 
     //APP_Cam_Initialize();
 
-    unsigned int k;
-    unsigned int i;
-
-    resetBluetooth();
-    forceBluetoothBaud9600(false);
-
-
-    Nop();
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
         SYS_Tasks ( );
 
+        APP_BT_Tasks();
+
         //APP_LED_Tasks();
 
         //APP_Cam_Tasks();
-
-        
-        char c = 0;
-/*        Nop();
-        for(i=0;i<IMG_WIDTH*IMG_HEIGHT;i++){
-            while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
-            PLIB_USART_TransmitterByteSend(USART_ID_4, c);
-            c++;
-
-            //for(k=0;k<100000000;k++);
-        }
-        for(k=0;k<100000000;k++);*/
     }
 
     /* Execution should not come here during normal operation */

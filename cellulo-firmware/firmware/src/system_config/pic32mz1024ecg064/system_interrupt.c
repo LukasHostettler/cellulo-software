@@ -72,6 +72,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "cam.h"
+#include "bluetooth.h"
 
 unsigned int currentRow = 0;
 unsigned int currentPixel = 0;
@@ -116,11 +117,10 @@ void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void)
 /*
  * Bluetooth
  */
-char c;
+
 void __ISR(_UART3_RX_VECTOR, ipl1AUTO) _BT_RX_Handler(void){
-    c = U3RXREG;
-    Nop();
-    U4TXREG = c;
+    btRxQueue[btRxQueueWriteIndex] = U3RXREG;
+    btRxQueueWriteIndex = (btRxQueueWriteIndex + 1) % BT_RX_QUEUE_SIZE;
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_3_RECEIVE);
 }
 
