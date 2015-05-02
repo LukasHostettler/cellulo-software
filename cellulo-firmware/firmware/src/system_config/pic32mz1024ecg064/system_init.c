@@ -219,6 +219,7 @@ void SYS_Initialize ( void* data )
 
     /* Initialize Drivers */
     DRV_USART0_Initialize();
+    DRV_USART1_Initialize();
 
     /*** SPI Driver Index 0 initialization***/
 

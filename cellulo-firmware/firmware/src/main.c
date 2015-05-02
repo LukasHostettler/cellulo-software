@@ -87,7 +87,7 @@ int main ( void )
     forceBluetoothBaud9600(false);
 
 
-
+    Nop();
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
@@ -97,15 +97,17 @@ int main ( void )
 
         //APP_Cam_Tasks();
 
-        const char str[] = "01234567890123456789012345678901234567890123456789";
-
-        Nop();
-        for(i=0;i<51;i++){
+        
+        char c = 0;
+/*        Nop();
+        for(i=0;i<IMG_WIDTH*IMG_HEIGHT;i++){
             while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
-            PLIB_USART_TransmitterByteSend(USART_ID_4, str[i]);
+            PLIB_USART_TransmitterByteSend(USART_ID_4, c);
+            c++;
+
             //for(k=0;k<100000000;k++);
         }
-        for(k=0;k<100000000;k++);
+        for(k=0;k<100000000;k++);*/
     }
 
     /* Execution should not come here during normal operation */

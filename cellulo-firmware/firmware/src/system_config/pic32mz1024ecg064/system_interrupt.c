@@ -77,6 +77,10 @@ unsigned int currentRow = 0;
 unsigned int currentPixel = 0;
 unsigned char frameno = 0;
 
+
+/*
+ * Image sensor signals
+ */
 void __ISR(_EXTERNAL_2_VECTOR, IPL7AUTO) _PIXEL_WR_Handler(void){
     pixels[currentPixel] = PORTE;
     currentPixel++;
@@ -109,6 +113,21 @@ void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void)
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
 }
 
+/*
+ * Bluetooth
+ */
+char c;
+void __ISR(_UART3_RX_VECTOR, ipl1AUTO) _BT_RX_Handler(void){
+    c = U3RXREG;
+    Nop();
+    U4TXREG = c;
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_3_RECEIVE);
+}
+
+/*
+ * LED
+ */
+
 void __ISR(_SPI1_RX_VECTOR, ipl1AUTO) _IntHandlerSPIRxInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);
@@ -121,6 +140,10 @@ void __ISR(_SPI1_FAULT_VECTOR, ipl1AUTO) _IntHandlerSPIFaultInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);
 }
+
+/*
+ * I2C
+ */
 
 void __ISR(_I2C5_MASTER_VECTOR, ipl1AUTO) _IntHandlerDrvI2CMasterInstance0(void)
 {
@@ -137,17 +160,6 @@ void __ISR(_I2C5_BUS_VECTOR, ipl1AUTO) _IntHandlerDrvI2CErrorInstance0(void)
     /* TODO: Add code to process interrupt here */
     /* Clear pending interrupt */
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_I2C_5_BUS);
-}
-
-void __ISR(_UART4_TX_VECTOR, ipl1AUTO) _IntHandlerDrvUsartTransmitInstance0(void)
-{
-
-
-    /* TODO: Add code to process interrupt here */
-
-    /* Clear pending interrupt */
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_4_TRANSMIT);
-    return;
 }
 
 /*******************************************************************************

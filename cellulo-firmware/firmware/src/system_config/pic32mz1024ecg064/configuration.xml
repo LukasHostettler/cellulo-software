@@ -94,7 +94,7 @@
     <Template>
       <Name>drv_usart_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/driver/usart</Path>
-      <Checksum>B02910BC7BE42716AB4DEDB14A64C754</Checksum>
+      <Checksum>4FD814B6E539E57C503A6F89C888D378</Checksum>
     </Template>
     <Template>
       <Name>drv_i2c_static.c</Name>
@@ -104,7 +104,7 @@
     <Template>
       <Name>drv_usart_static.h</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/driver/usart</Path>
-      <Checksum>C0F1A35C10AB892633836B3D9B8FCA92</Checksum>
+      <Checksum>BAF30867BA941E0F2E8DB5F630CF896C</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.h</Name>
@@ -114,7 +114,7 @@
     <Template>
       <Name>system_init.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>FAB2C78F5E5D97959E071F592BEC3B4D</Checksum>
+      <Checksum>DB94687A7AEB7FA64E4A6D369848139A</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_master_ebm_tasks.c</Name>
@@ -129,7 +129,7 @@
     <Template>
       <Name>sys_ports_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/system/ports/src</Path>
-      <Checksum>5707F6E6C8E8EE4749AE62749B7ED475</Checksum>
+      <Checksum>2092186C25813A4F43DF9E1E4F878D39</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.c</Name>
@@ -143,7 +143,7 @@
     <Template>
       <Name>system_interrupt.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>4C222567EA5675DD4E1E661BD6493BD6</Checksum>
+      <Checksum>976991AFDC6C60EF1057B63065B9464C</Checksum>
     </Template>
     <Template>
       <Name>drv_spi_tasks.c</Name>
@@ -157,7 +157,7 @@
     <Template>
       <Name>system_config.h</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>79BA6D23B17906038AD9F7935D71E32D</Checksum>
+      <Checksum>C10088DE56905F5690BFC686C29B35B4</Checksum>
     </Template>
     <Template>
       <Name>app.c</Name>

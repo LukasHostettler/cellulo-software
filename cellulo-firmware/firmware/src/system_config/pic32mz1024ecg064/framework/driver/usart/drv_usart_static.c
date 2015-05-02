@@ -69,11 +69,6 @@ void DRV_USART0_Initialize(void)
     PLIB_USART_TransmitterEnable(USART_ID_4);
     PLIB_USART_TransmitterInterruptModeSelect(USART_ID_4, USART_TRANSMIT_FIFO_IDLE);
 
-    /* Initialize TX interrupt */
-    //PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_USART_4_TRANSMIT);
-    //PLIB_INT_VectorPrioritySet(INT_ID_0, INT_VECTOR_UART4_TX, INT_PRIORITY_LEVEL1);
-    //PLIB_INT_VectorSubPrioritySet(INT_ID_0, INT_VECTOR_UART4_TX, INT_SUBPRIORITY_LEVEL0);
-
     PLIB_USART_Enable(USART_ID_4);
 }
 
@@ -102,6 +97,58 @@ void DRV_USART0_WriteByte(const uint8_t byte)
    }
 
    PLIB_USART_TransmitterByteSend(USART_ID_4, byte);
+}
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Instance 1 static driver functions
+// *****************************************************************************
+// *****************************************************************************
+
+void DRV_USART1_Initialize(void)
+{
+    /* Initialize USART */
+    PLIB_USART_BaudRateSet(USART_ID_3, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_2), 115000);
+    PLIB_USART_HandshakeModeSelect(USART_ID_3, USART_HANDSHAKE_MODE_SIMPLEX);
+    PLIB_USART_OperationModeSelect(USART_ID_3, USART_ENABLE_TX_RX_USED);
+    PLIB_USART_LineControlModeSelect(USART_ID_3, USART_8N1);
+    PLIB_USART_ReceiverEnable(USART_ID_3);
+    PLIB_USART_ReceiverInterruptModeSelect(USART_ID_3, USART_RECEIVE_FIFO_ONE_CHAR);
+
+    /* Initialize RX interrupt */
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_3_RECEIVE);
+    PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_USART_3_RECEIVE);
+    PLIB_INT_VectorPrioritySet(INT_ID_0, INT_VECTOR_UART3_RX, INT_PRIORITY_LEVEL1);
+    PLIB_INT_VectorSubPrioritySet(INT_ID_0, INT_VECTOR_UART3_RX, INT_SUBPRIORITY_LEVEL0);
+
+    PLIB_USART_Enable(USART_ID_3);
+}
+
+
+
+
+bool DRV_USART1_ReceiverBufferIsEmpty(void)
+{
+   return (!PLIB_USART_ReceiverDataIsAvailable(USART_ID_3));
+}
+
+uint8_t DRV_USART1_ReadByte(void)
+{
+   if(PLIB_USART_ReceiverOverrunHasOccurred(USART_ID_3))
+   {
+      PLIB_USART_ReceiverOverrunErrorClear(USART_ID_3);
+   }
+
+   return (PLIB_USART_ReceiverByteReceive(USART_ID_3));
+}
+
+void DRV_USART1_WriteByte(const uint8_t byte)
+{
+   while(PLIB_USART_TransmitterBufferIsFull(USART_ID_3))
+   {
+   }
+
+   PLIB_USART_TransmitterByteSend(USART_ID_3, byte);
 }
 
 

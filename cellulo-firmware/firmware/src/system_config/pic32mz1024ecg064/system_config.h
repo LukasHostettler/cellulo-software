@@ -132,7 +132,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define SYS_PORT_F_CNPD         0x0
 #define SYS_PORT_F_CNEN         0x0
 
-#define SYS_PORT_G_ANSEL        0x380
+#define SYS_PORT_G_ANSEL        0x300
 #define SYS_PORT_G_TRIS         0x3c0
 #define SYS_PORT_G_LAT          0x0
 #define SYS_PORT_G_ODC          0x0
