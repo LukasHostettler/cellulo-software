@@ -7,6 +7,7 @@
  */
 
 #include "bluetooth.h"
+#include "cam.h"
 
 char btRxQueue[BT_RX_QUEUE_SIZE];
 unsigned int btRxQueueReadIndex;
@@ -34,6 +35,8 @@ void APP_BT_Initialize(){
     bluetoothForceBaud9600(false);
 }
 
+unsigned int frames = 0;
+
 void APP_BT_Tasks(){
     while(btRxQueueReadIndex != btRxQueueWriteIndex){
         
@@ -43,12 +46,23 @@ void APP_BT_Tasks(){
         
         btRxQueueReadIndex = (btRxQueueReadIndex + 1) % BT_RX_QUEUE_SIZE;
     }
+
+    //Consume frame
+    if(frameReady){
+        if(frames > 100){
+            Nop();
+            bluetoothSend(pixels, IMG_HEIGHT*IMG_WIDTH);
+        }
+        else
+            frames++;
+        frameReady = false;
+    }
 }
 
 void bluetoothSend(char* c, unsigned int n){
-    int i;
-    for(i=0;i<n;i++){
+    int k;
+    for(k=0;k<n;k++){
         while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
-        PLIB_USART_TransmitterByteSend(USART_ID_4, c[i]);
+        PLIB_USART_TransmitterByteSend(USART_ID_4, c[k]);
     }
 }

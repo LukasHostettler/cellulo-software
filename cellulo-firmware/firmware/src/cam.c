@@ -8,9 +8,11 @@
 
 #include"cam.h"
 
-unsigned char pixels[IMG_WIDTH*IMG_HEIGHT];
+unsigned char pixels[IMG_WIDTH_WITH_BLANKING*IMG_HEIGHT_WITH_BLANKING + IMG_VERTICAL_BLANKING_EXTRA];
+unsigned char frameReady;
 
 void APP_Cam_Initialize(){
+    frameReady = false;
 
     //Initialize pixel memory
     int i;

@@ -39,8 +39,6 @@ void MT9V034Standby(BOOL enable){
     }
 }
 
-
-
 void MT9V034OutputEnable(BOOL enable){
     if(enable)
         PLIB_PORTS_PinSet(PORTS_ID_0, IMG_OE_PORT_CHANNEL, IMG_OE_PORT_BIT_POS);

@@ -76,40 +76,39 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 unsigned int currentRow = 0;
 unsigned int currentPixel = 0;
-unsigned char frameno = 0;
-
 
 /*
  * Image sensor signals
  */
+
 void __ISR(_EXTERNAL_2_VECTOR, IPL7AUTO) _PIXEL_WR_Handler(void){
     pixels[currentPixel] = PORTE;
     currentPixel++;
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
 }
 
-void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void)
-{
+void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void){
     currentRow++;
-    if(currentRow >= 120)
+    if(currentRow >= 120){
+
+        //Frame finished here
+        
         PLIB_INT_SourceDisable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+        frameReady = true;
+    }
     else
         currentPixel = currentRow*IMG_WIDTH;
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_3);
 }
 
-void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void)
-{
-    if(currentPixel >= 22560 && currentPixel <= 23000 && currentRow == 120){
-        frameno++;
-        if(frameno>100){
-            Nop();
-        }
-    }
+void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void){
     currentRow = 0;
     currentPixel = 0;
-    PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+
+    if(!frameReady){
+        PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+        PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+    }
 
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
 }

@@ -80,7 +80,7 @@ int main ( void )
 
     //APP_LED_Initialize();
 
-    //APP_Cam_Initialize();
+    APP_Cam_Initialize();
 
     while ( true )
     {
@@ -91,7 +91,7 @@ int main ( void )
 
         //APP_LED_Tasks();
 
-        //APP_Cam_Tasks();
+        APP_Cam_Tasks();
     }
 
     /* Execution should not come here during normal operation */
