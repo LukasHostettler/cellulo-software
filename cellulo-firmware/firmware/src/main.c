@@ -63,13 +63,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include"led.h"
 #include"cam.h"
 #include"bluetooth.h"
+#include"touch.h"
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
 // *****************************************************************************
 // *****************************************************************************
-
 
 int main ( void )
 {
@@ -82,6 +82,8 @@ int main ( void )
 
     APP_Cam_Initialize();
 
+    //APP_Touch_Initialize();
+
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
@@ -92,6 +94,9 @@ int main ( void )
         //APP_LED_Tasks();
 
         APP_Cam_Tasks();
+
+        //APP_Touch_Tasks();
+        
     }
 
     /* Execution should not come here during normal operation */

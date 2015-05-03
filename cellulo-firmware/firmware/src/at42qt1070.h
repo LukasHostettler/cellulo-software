@@ -9,6 +9,11 @@
 #ifndef AT42QT1070_H
 #define	AT42QT1070_H
 
+#include<xc.h>
+#include<GenericTypeDefs.h>
+
+#include"system_config/pic32mz1024ecg064/system_definitions.h"
+
 /*
  * I2C slave write address
  */
@@ -63,6 +68,53 @@
 #define AT42QT1070_REG_ADDR_MAX_ON_DURATION     55
 #define AT42QT1070_REG_ADDR_CALIBRATE           56
 #define AT42QT1070_REG_ADDR_RESET_BAR           57
+
+/**
+ * @brief Initializes the device functionality
+ */
+void AT42QT1070Init();
+
+/**
+ * @brief Resets the device
+ */
+void AT42QT1070Reset();
+
+/**
+ * @brief Sets Adjacent Key Suppression group for given key
+ * 
+ * @param key 0, 1, 2, 3, 4, 5 or 6
+ * @param group 1, 2 or 3; 0 disables AKS
+ */
+void AT42QT1070SetAKS(unsigned char key, unsigned char group);
+
+/**
+ * @brief Sets averaging for given key
+ *
+ * @param key 0, 1, 2, 3, 4, 5 or 6
+ * @param ave Number of samples to average; 0, 1, 2, 4, 8, 16 or 32
+ */
+void AT42QT1070SetAVE(unsigned char key, unsigned char ave);
+
+/**
+ * @brief Disables given key
+ *
+ * @param key 0, 1, 2, 3, 4, 5 or 6
+ */
+void AT42QT1070DisableKey(unsigned char key);
+
+/**
+ * @brief Sets the key sampling period
+ *
+ * @param eightMillis Sampling period is this many 8 ms
+ */
+void AT42QT1070SetSamplePeriod(unsigned char eightMillis);
+
+/**
+ * @brief Gets the key states, whether pressed or not
+ *
+ * @param keys Output buffer
+ */
+void AT42QT1070GetKeyStates(bool* keys);
 
 #endif	/* AT42QT1070_H */
 

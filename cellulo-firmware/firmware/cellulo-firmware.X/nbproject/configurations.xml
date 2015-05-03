@@ -36,6 +36,9 @@
         <itemPath>../src/mt9v034.h</itemPath>
         <itemPath>../src/cam.h</itemPath>
         <itemPath>../src/bluetooth.h</itemPath>
+        <itemPath>../src/at42qt1070.h</itemPath>
+        <itemPath>../src/util.h</itemPath>
+        <itemPath>../src/touch.h</itemPath>
       </logicalFolder>
       <logicalFolder name="framework" displayName="framework" projectFiles="true">
         <logicalFolder name="driver" displayName="driver" projectFiles="true">
@@ -125,6 +128,8 @@
         <itemPath>../src/mt9v034.c</itemPath>
         <itemPath>../src/cam.c</itemPath>
         <itemPath>../src/bluetooth.c</itemPath>
+        <itemPath>../src/at42qt1070.c</itemPath>
+        <itemPath>../src/touch.c</itemPath>
       </logicalFolder>
       <logicalFolder name="framework" displayName="framework" projectFiles="true">
         <logicalFolder name="driver" displayName="driver" projectFiles="true">
