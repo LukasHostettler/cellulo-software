@@ -13,9 +13,9 @@ void MT9V034Reset(){
 
     //Reset sequence
     PLIB_PORTS_PinClear(PORTS_ID_0, IMG_RESET_BAR_PORT_CHANNEL, IMG_RESET_BAR_PORT_BIT_POS);
-    for(i=0;i<1000000;i++) Nop();
+    for(i=0;i<10000000;i++) Nop();
     PLIB_PORTS_PinSet(PORTS_ID_0, IMG_RESET_BAR_PORT_CHANNEL, IMG_RESET_BAR_PORT_BIT_POS);
-    for(i=0;i<1000000;i++) Nop();
+    for(i=0;i<10000000;i++) Nop();
 
     //Clear bit 9 of CHIP CONTROL register
     MT9V034Register reg;

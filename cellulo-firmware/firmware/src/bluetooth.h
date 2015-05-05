@@ -6,6 +6,35 @@
  * @date 2015-05-02
  */
 
+/*
+ * About the RN42 module:
+ *
+ * When the board is first flashed, the RN42 module must be "flashed" as well.
+ * After powering up, within less than 60 seconds, connect to it with a serial
+ * console over Bluetooth. Type
+ *
+ *      $$$
+ *
+ * to enter command mode. The module should respond with
+ *
+ *      CMD
+ *
+ * Then, type
+ *
+ *      ST,254<cr>
+ *
+ * to disable command mode over UART. The module should respond with
+ *
+ *      AOK
+ *
+ * Finally, exit command mode with
+ *
+ *      ---<cr>
+ *
+ * and reboot the board.
+ *
+ */
+
 #ifndef BLUETOOTH_H
 #define	BLUETOOTH_H
 
@@ -20,6 +49,12 @@
 
 #define BT_BAUD_9600_PORT_CHANNEL PORT_CHANNEL_C
 #define BT_BAUD_9600_PORT_BIT_POS PORTS_BIT_POS_15
+
+#define BT_RTS_BAR_PORT_CHANNEL PORT_CHANNEL_G
+#define BT_RTS_BAR_PORT_BIT_POS PORTS_BIT_POS_8
+
+#define BT_CTS_BAR_PORT_CHANNEL PORT_CHANNEL_G
+#define BT_CTS_BAR_PORT_BIT_POS PORTS_BIT_POS_9
 
 extern char btRxQueue[];
 extern unsigned int btRxQueueWriteIndex;

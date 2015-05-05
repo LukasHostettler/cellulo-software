@@ -33,6 +33,7 @@ void APP_BT_Initialize(){
     btRxQueueWriteIndex = 0;
     bluetoothReset();
     bluetoothForceBaud9600(false);
+    PLIB_PORTS_PinClear(PORTS_ID_0, BT_CTS_BAR_PORT_CHANNEL, BT_CTS_BAR_PORT_BIT_POS);
 }
 
 unsigned int frames = 0;
@@ -62,7 +63,14 @@ void APP_BT_Tasks(){
 void bluetoothSend(char* c, unsigned int n){
     int k;
     for(k=0;k<n;k++){
+
+        //Wait until transmitter buffer is available
         while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+
+        //Wait until Bluetooth module is available
+        while(PLIB_PORTS_PinGet(PORTS_ID_0, BT_RTS_BAR_PORT_CHANNEL, BT_RTS_BAR_PORT_BIT_POS));
+
+        //Send byte
         PLIB_USART_TransmitterByteSend(USART_ID_4, c[k]);
     }
 }
