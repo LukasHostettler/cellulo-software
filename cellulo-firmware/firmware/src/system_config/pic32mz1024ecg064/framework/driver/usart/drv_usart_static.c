@@ -62,7 +62,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 void DRV_USART0_Initialize(void)
 {
     /* Initialize USART */
-    PLIB_USART_BaudRateSet(USART_ID_4, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_2), 115200);
+    //PLIB_USART_BaudRateSet(USART_ID_4, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_2), 921600); //This has no BRGH support
+    U4BRG = 26;
+    U4MODEbits.BRGH = 1;
     PLIB_USART_HandshakeModeSelect(USART_ID_4, USART_HANDSHAKE_MODE_SIMPLEX);
     PLIB_USART_OperationModeSelect(USART_ID_4, USART_ENABLE_TX_RX_USED);
     PLIB_USART_LineControlModeSelect(USART_ID_4, USART_8N1);
@@ -108,7 +110,9 @@ void DRV_USART0_WriteByte(const uint8_t byte)
 void DRV_USART1_Initialize(void)
 {
     /* Initialize USART */
-    PLIB_USART_BaudRateSet(USART_ID_3, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_2), 115200);
+    PLIB_USART_BaudRateSet(USART_ID_3, SYS_CLK_PeripheralFrequencyGet(CLK_BUS_PERIPHERAL_2), 921600); //This has no BRGH support
+    U4BRG = 26;
+    U4MODEbits.BRGH = 1;
     PLIB_USART_HandshakeModeSelect(USART_ID_3, USART_HANDSHAKE_MODE_SIMPLEX);
     PLIB_USART_OperationModeSelect(USART_ID_3, USART_ENABLE_TX_RX_USED);
     PLIB_USART_LineControlModeSelect(USART_ID_3, USART_8N1);

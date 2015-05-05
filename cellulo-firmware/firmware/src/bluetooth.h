@@ -27,7 +27,15 @@
  *
  *      AOK
  *
- * Finally, exit command mode with
+ * Then, type
+ *
+ *      SU,92<cr>
+ *
+ * to set baud rate to 921K. The module should respond with
+ *
+ *      AOK
+ *
+ * as before. Finally, exit command mode with
  *
  *      ---<cr>
  *

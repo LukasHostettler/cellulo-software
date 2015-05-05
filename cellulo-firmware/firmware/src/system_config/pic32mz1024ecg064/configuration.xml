@@ -112,24 +112,24 @@
       <Checksum>999179DADE9ECD59953526F5E9F83ACC</Checksum>
     </Template>
     <Template>
-      <Name>system_init.c</Name>
-      <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>DB94687A7AEB7FA64E4A6D369848139A</Checksum>
-    </Template>
-    <Template>
       <Name>drv_spi_master_ebm_tasks.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/driver/spi/dynamic</Path>
       <Checksum>B8F36751AC74A83FB702A280F975293A</Checksum>
     </Template>
     <Template>
-      <Name>system_tasks.c</Name>
+      <Name>system_init.c</Name>
       <Path>app/system_config/pic32mz1024ecg064</Path>
-      <Checksum>7912E6FFAF09D7396CB08308BA546793</Checksum>
+      <Checksum>DB94687A7AEB7FA64E4A6D369848139A</Checksum>
     </Template>
     <Template>
       <Name>sys_ports_static.c</Name>
       <Path>app/system_config/pic32mz1024ecg064/framework/system/ports/src</Path>
       <Checksum>2092186C25813A4F43DF9E1E4F878D39</Checksum>
+    </Template>
+    <Template>
+      <Name>system_tasks.c</Name>
+      <Path>app/system_config/pic32mz1024ecg064</Path>
+      <Checksum>7912E6FFAF09D7396CB08308BA546793</Checksum>
     </Template>
     <Template>
       <Name>sys_clk_static.c</Name>
