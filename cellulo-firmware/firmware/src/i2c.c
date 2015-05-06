@@ -8,7 +8,9 @@
 
 #include"i2c.h"
 
-#include <xc.h>
+#include<xc.h>
+#include<sys/attribs.h>
+#include"system_definitions.h"
 
 unsigned char _I2CWriteByte(unsigned char byte){
     if(DRV_I2C0_ByteWrite(byte)){
@@ -119,4 +121,19 @@ void I2CWriteBytes(unsigned char writeAddr, unsigned char registerAddr, int n, u
 
     //Stop sequence stops and restarts whole I2C module due to silicon bug
     //so no need to wait for stop condition end
+}
+
+void __ISR(_I2C5_MASTER_VECTOR, ipl1AUTO) _IntHandlerDrvI2CMasterInstance0(void){
+
+    /* TODO: Add code to process interrupt here */
+    /* Clear pending interrupt */
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_I2C_5_MASTER);
+
+}
+
+void __ISR(_I2C5_BUS_VECTOR, ipl1AUTO) _IntHandlerDrvI2CErrorInstance0(void){
+
+    /* TODO: Add code to process interrupt here */
+    /* Clear pending interrupt */
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_I2C_5_BUS);
 }

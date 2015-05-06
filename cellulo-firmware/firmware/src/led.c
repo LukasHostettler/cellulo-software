@@ -8,6 +8,10 @@
 
 #include"led.h"
 
+#include<xc.h>
+#include<sys/attribs.h>
+#include"system_definitions.h"
+
 LEDObject leds;
 char awaitingLatch;
 DRV_HANDLE spiHandle;
@@ -94,4 +98,14 @@ void setLED5(unsigned short red, unsigned short green, unsigned short blue){
     leds.leds.led5red = red;
     leds.leds.led5green = green;
     leds.leds.led5blue = blue;
+}
+
+void __ISR(_SPI1_RX_VECTOR, ipl1AUTO) _IntHandlerSPIRxInstance0(void){
+    DRV_SPI_Tasks(sysObj.spiObjectIdx0);
+}
+void __ISR(_SPI1_TX_VECTOR, ipl1AUTO) _IntHandlerSPITxInstance0(void){
+    DRV_SPI_Tasks(sysObj.spiObjectIdx0);
+}
+void __ISR(_SPI1_FAULT_VECTOR, ipl1AUTO) _IntHandlerSPIFaultInstance0(void){
+    DRV_SPI_Tasks(sysObj.spiObjectIdx0);
 }
