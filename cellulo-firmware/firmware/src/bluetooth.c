@@ -6,12 +6,21 @@
  * @date 2015-05-02
  */
 
-#include "bluetooth.h"
-#include "cam.h"
+#include"bluetooth.h"
+
+#include"cam.h"
+
+#include<string.h>
 
 char btRxQueue[BT_RX_QUEUE_SIZE];
-unsigned int btRxQueueReadIndex;
+char btRxCmd[BT_RX_QUEUE_SIZE];
 unsigned int btRxQueueWriteIndex;
+unsigned int btRxQueueReadIndex;
+unsigned int btRxCmdIndex;
+const char* btCmdStrings[] = {
+    "PING_",
+    "FRAME"
+};
 
 void bluetoothReset(){
     int k;
@@ -29,34 +38,48 @@ void bluetoothForceBaud9600(BOOL enable){
 }
 
 void APP_BT_Initialize(){
-    btRxQueueReadIndex = 0;
     btRxQueueWriteIndex = 0;
+    btRxQueueReadIndex = 0;
+    btRxCmdIndex = 0;
     bluetoothReset();
     bluetoothForceBaud9600(false);
     PLIB_PORTS_PinClear(PORTS_ID_0, BT_CTS_BAR_PORT_CHANNEL, BT_CTS_BAR_PORT_BIT_POS);
 }
 
-unsigned int frames = 0;
+inline BT_CMD getCommand(){
+    int c;
+    for(c=0;c<BT_CMD_NUM_COMMANDS;c++)
+        if(!strncmp(btCmdStrings[c], btRxCmd, 5))
+            return (BT_CMD)c;
+    return BT_CMD_INVALID;
+}
 
 void APP_BT_Tasks(){
     while(btRxQueueReadIndex != btRxQueueWriteIndex){
-        
-        //TODO: PROCESS INCOMING COMMANDS HERE
-        if(btRxQueue[btRxQueueReadIndex] == 'q')
-            bluetoothSend("OK", 2);
+        btRxCmd[btRxCmdIndex] = btRxQueue[btRxQueueReadIndex];
+
+        //Command has ended
+        if(btRxCmd[btRxCmdIndex] == '\n'){
+            btRxCmdIndex = 0;
+            switch(getCommand()){
+                case BT_CMD_PING:
+                    bluetoothSend("PONG\n", 5);
+                    break;
+
+                case BT_CMD_FRAME_REQUEST:
+                    frameRequest = true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        //Command continues
+        else
+            btRxCmdIndex = (btRxCmdIndex + 1) % BT_RX_QUEUE_SIZE;
         
         btRxQueueReadIndex = (btRxQueueReadIndex + 1) % BT_RX_QUEUE_SIZE;
-    }
-
-    //Consume frame
-    if(frameReady){
-        if(frames > 100){
-            Nop();
-            bluetoothSend(pixels, IMG_HEIGHT*IMG_WIDTH);
-        }
-        else
-            frames++;
-        frameReady = false;
     }
 }
 

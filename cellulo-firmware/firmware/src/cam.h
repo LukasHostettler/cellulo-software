@@ -19,7 +19,8 @@
 #define IMG_VERTICAL_BLANKING_EXTRA 4
 
 extern unsigned char pixels[];
-extern unsigned char frameReady;
+extern bool frameReady;
+extern bool frameRequest;
 
 /**
  * Initializes camera functionality

@@ -94,7 +94,10 @@ void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void){
         //Frame finished here
         
         PLIB_INT_SourceDisable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-        frameReady = true;
+        if(frameRequest){
+            frameReady = true;
+            frameRequest = false;
+        }
     }
     else
         currentPixel = currentRow*IMG_WIDTH;
@@ -105,7 +108,7 @@ void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void){
     currentRow = 0;
     currentPixel = 0;
 
-    if(!frameReady){
+    if(frameRequest){
         PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
         PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
     }

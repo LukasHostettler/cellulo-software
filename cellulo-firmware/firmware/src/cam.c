@@ -9,10 +9,12 @@
 #include"cam.h"
 
 unsigned char pixels[IMG_WIDTH_WITH_BLANKING*IMG_HEIGHT_WITH_BLANKING + IMG_VERTICAL_BLANKING_EXTRA];
-unsigned char frameReady;
+bool frameReady;
+bool frameRequest;
 
 void APP_Cam_Initialize(){
     frameReady = false;
+    frameRequest = false;
 
     //Initialize pixel memory
     int i;
@@ -26,6 +28,11 @@ void APP_Cam_Initialize(){
 }
 
 void APP_Cam_Tasks(){
-    Nop();
+
+    //Consume frame
+    if(frameReady){
+        bluetoothSend(pixels, IMG_HEIGHT*IMG_WIDTH);
+        frameReady = false;
+    }
 }
 

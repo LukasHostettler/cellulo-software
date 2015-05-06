@@ -64,8 +64,18 @@
 #define BT_CTS_BAR_PORT_CHANNEL PORT_CHANNEL_G
 #define BT_CTS_BAR_PORT_BIT_POS PORTS_BIT_POS_9
 
-extern char btRxQueue[];
-extern unsigned int btRxQueueWriteIndex;
+extern char btRxQueue[];                    ///< Queue for commands received over Bluetooth
+extern unsigned int btRxQueueWriteIndex;    ///< Current write index for the Bluetooth command queue
+
+/**
+ * @brief List of Bluetooth commands
+ */
+typedef enum{
+    BT_CMD_PING = 0,            ///< Ping request
+    BT_CMD_FRAME_REQUEST,       ///< Request for camera frame
+    BT_CMD_NUM_COMMANDS,
+    BT_CMD_INVALID = -1
+} BT_CMD;
 
 /**
  * @brief Sends characters over Bluetooth
