@@ -76,26 +76,26 @@ int main ( void )
     /* Initialize all MPLAB Harmony modules, including application(s). */
     SYS_Initialize ( NULL );
 
-    APP_BT_Initialize();
+    //APP_BT_Initialize();
 
-    //APP_LED_Initialize();
+    APP_LED_Initialize();
 
-    APP_Cam_Initialize();
+    //APP_Cam_Initialize();
 
-    //APP_Touch_Initialize();
+    APP_Touch_Initialize();
 
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
         SYS_Tasks ( );
 
-        APP_BT_Tasks();
+        //APP_BT_Tasks();
 
-        //APP_LED_Tasks();
+        APP_LED_Tasks();
 
-        APP_Cam_Tasks();
+        //APP_Cam_Tasks();
 
-        //APP_Touch_Tasks();
+        APP_Touch_Tasks();
         
     }
 

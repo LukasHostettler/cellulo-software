@@ -74,58 +74,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "cam.h"
 #include "bluetooth.h"
 
-unsigned int currentRow = 0;
-unsigned int currentPixel = 0;
-
-/*
- * Image sensor signals
- */
-
-void __ISR(_EXTERNAL_2_VECTOR, IPL7AUTO) _PIXEL_WR_Handler(void){
-    pixels[currentPixel] = PORTE;
-    currentPixel++;
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-}
-
-void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void){
-    currentRow++;
-    if(currentRow >= 120){
-
-        //Frame finished here
-        
-        PLIB_INT_SourceDisable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-        if(frameRequest){
-            frameReady = true;
-            frameRequest = false;
-        }
-    }
-    else
-        currentPixel = currentRow*IMG_WIDTH;
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_3);
-}
-
-void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void){
-    currentRow = 0;
-    currentPixel = 0;
-
-    if(frameRequest){
-        PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-        PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-    }
-
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
-}
-
-/*
- * Bluetooth
- */
-
-void __ISR(_UART3_RX_VECTOR, ipl1AUTO) _BT_RX_Handler(void){
-    btRxQueue[btRxQueueWriteIndex] = U3RXREG;
-    btRxQueueWriteIndex = (btRxQueueWriteIndex + 1) % BT_RX_QUEUE_SIZE;
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_3_RECEIVE);
-}
-
 /*
  * LED
  */

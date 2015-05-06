@@ -8,9 +8,12 @@
 
 #include"bluetooth.h"
 
-#include"cam.h"
-
+#include<xc.h>
+#include<sys/attribs.h>
 #include<string.h>
+
+#include"system_definitions.h"
+#include"cam.h"
 
 char btRxQueue[BT_RX_QUEUE_SIZE];
 char btRxCmd[BT_RX_QUEUE_SIZE];
@@ -96,4 +99,10 @@ void bluetoothSend(char* c, unsigned int n){
         //Send byte
         PLIB_USART_TransmitterByteSend(USART_ID_4, c[k]);
     }
+}
+
+void __ISR(_UART3_RX_VECTOR, ipl1AUTO) _BT_RX_Handler(void){
+    btRxQueue[btRxQueueWriteIndex] = U3RXREG;
+    btRxQueueWriteIndex = (btRxQueueWriteIndex + 1) % BT_RX_QUEUE_SIZE;
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_USART_3_RECEIVE);
 }
