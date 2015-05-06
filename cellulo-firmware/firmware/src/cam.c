@@ -15,14 +15,14 @@
 unsigned char pixels[IMG_WIDTH_WITH_BLANKING*IMG_HEIGHT_WITH_BLANKING + IMG_VERTICAL_BLANKING_EXTRA];
 bool frameReady;
 bool frameRequest;
+bool disableLineValid;
 unsigned int currentRow = 0;
-unsigned int currentPixel = 0;
 
 void APP_Cam_Initialize(){
     frameReady = false;
     frameRequest = false;
+    disableLineValid = false;
     currentRow = 0;
-    currentPixel = 0;
 
     //Initialize pixel memory
     int i;
@@ -38,42 +38,36 @@ void APP_Cam_Initialize(){
 void APP_Cam_Tasks(){
 
     //Consume frame
-    if(frameReady){
+    if(frameReady && frameRequest){
         bluetoothSend(pixels, IMG_HEIGHT*IMG_WIDTH);
-        frameReady = false;
+        frameRequest = false;
+        //PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
+        //PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_4);
     }
-}
-
-void __ISR(_EXTERNAL_2_VECTOR, IPL7AUTO) _PIXEL_WR_Handler(void){
-    pixels[currentPixel] = PORTE;
-    currentPixel++;
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
 }
 
 void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void){
-    currentRow++;
-    if(currentRow >= 120){
 
-        //Frame finished here
+    if(!frameReady){
+        PLIB_DMA_ChannelXDestinationStartAddressSet(DMA_ID_0, DMA_CHANNEL_0, (uint32_t)&pixels[currentRow*IMG_WIDTH]);
+        PLIB_DMA_ChannelXEnable(DMA_ID_0, DMA_CHANNEL_0);
 
-        PLIB_INT_SourceDisable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-        if(frameRequest){
+        currentRow++;
+        if(currentRow >= IMG_HEIGHT){
+
+            //Frame finished here
             frameReady = true;
-            frameRequest = false;
         }
     }
-    else
-        currentPixel = currentRow*IMG_WIDTH;
+
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_3);
 }
 
 void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void){
-    currentRow = 0;
-    currentPixel = 0;
 
-    if(frameRequest){
-        PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_2);
-        PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_2);
+    if(!frameRequest){
+        currentRow = 0;
+        frameReady = false;
     }
 
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);

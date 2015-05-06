@@ -84,6 +84,9 @@ int main ( void )
 
     //APP_Touch_Initialize();
 
+    SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_3);
+    SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_4);
+
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */

@@ -52,6 +52,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 
 
+
+
+
+
+#include"cam.h"
+
+
 // ****************************************************************************
 // ****************************************************************************
 // Section: Configuration Bits
@@ -217,6 +224,69 @@ void SYS_Initialize ( void* data )
     SYS_DEVCON_PerformanceConfig(SYS_CLK_SystemFrequencyGet());
     SYS_PORTS_Initialize();
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    /* Disable the DMA module */
+    PLIB_DMA_Disable(DMA_ID_0);
+
+    /* Set the priority levels for the DMA Channels */
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_0, 0x00);
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_1, 0x00);
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_2, 0x00);
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_3, 0x00);
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_4, 0x00);
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_5, 0x00);
+    PLIB_DMA_ChannelXPrioritySelect(DMA_ID_0, DMA_CHANNEL_6, 0x00);
+
+    /* Enable the DMA module */
+    PLIB_DMA_Enable(DMA_ID_0);
+
+
+    /* DMA transfer to start */
+    PLIB_DMA_ChannelXTriggerEnable(DMA_ID_0, DMA_CHANNEL_0, DMA_CHANNEL_TRIGGER_TRANSFER_START);
+    PLIB_DMA_ChannelXStartIRQSet(DMA_ID_0, DMA_CHANNEL_0, DMA_TRIGGER_EXTERNAL_2);
+
+    /* Set the source and destinaton addresses (addresses are converted from virtual to physical) */
+    PLIB_DMA_ChannelXSourceStartAddressSet(DMA_ID_0, DMA_CHANNEL_0, (uint32_t)&PORTE);
+    //PLIB_DMA_ChannelXDestinationStartAddressSet(DMA_ID_0, DMA_CHANNEL_0, 0);
+
+    /* Set the source and destination sizes */
+    PLIB_DMA_ChannelXSourceSizeSet(DMA_ID_0, DMA_CHANNEL_0, 1);
+    PLIB_DMA_ChannelXDestinationSizeSet(DMA_ID_0, DMA_CHANNEL_0, IMG_WIDTH);
+
+    /* Set the number of bytes per transfer */
+    PLIB_DMA_ChannelXCellSizeSet(DMA_ID_0, DMA_CHANNEL_0, 1);
+
+
+
+
+
+
+
+
+
+   /* DCH0INTbits.CHBCIE = 1;
+    DCH0INTbits.CHERIE = 1;
+
+    SYS_INT_VectorPrioritySet(INT_VECTOR_DMA0, INT_PRIORITY_LEVEL7);
+    SYS_INT_VectorSubprioritySet(INT_VECTOR_DMA0, INT_SUBPRIORITY_LEVEL3);
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_DMA_0);
+    SYS_INT_SourceEnable(INT_SOURCE_DMA_0);*/
+
+    Nop();
+
     /* Initialize Drivers */
     DRV_USART0_Initialize();
     DRV_USART1_Initialize();
@@ -236,23 +306,23 @@ void SYS_Initialize ( void* data )
     /* Initialize System Services */
     SYS_INT_Initialize();  
 	
-    /*Setup the INT_SOURCE_EXTERNAL_2 and Enable it*/
-    SYS_INT_VectorPrioritySet(INT_VECTOR_INT2, INT_PRIORITY_LEVEL5);
-    SYS_INT_VectorSubprioritySet(INT_VECTOR_INT2, INT_SUBPRIORITY_LEVEL0);
-    SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE2,INT_EDGE_TRIGGER_RISING);
-    SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_2);
+    /*Setup the INT_SOURCE_EXTERNAL_3 and Enable it*/
+    SYS_INT_VectorPrioritySet(INT_VECTOR_INT3, INT_PRIORITY_LEVEL7);
+    SYS_INT_VectorSubprioritySet(INT_VECTOR_INT3, INT_SUBPRIORITY_LEVEL0);
+    SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE3,INT_EDGE_TRIGGER_RISING);
+    //SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_3);
 
     /*Setup the INT_SOURCE_EXTERNAL_4 and Enable it*/
     SYS_INT_VectorPrioritySet(INT_VECTOR_INT4, INT_PRIORITY_LEVEL7);
-    SYS_INT_VectorSubprioritySet(INT_VECTOR_INT4, INT_SUBPRIORITY_LEVEL0);
+    SYS_INT_VectorSubprioritySet(INT_VECTOR_INT4, INT_SUBPRIORITY_LEVEL1);
     SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE4,INT_EDGE_TRIGGER_RISING);
-    SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_4);
+    //SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_4);
 
-    /*Setup the INT_SOURCE_EXTERNAL_3 and Enable it*/
-    SYS_INT_VectorPrioritySet(INT_VECTOR_INT3, INT_PRIORITY_LEVEL6);
-    SYS_INT_VectorSubprioritySet(INT_VECTOR_INT3, INT_SUBPRIORITY_LEVEL0);
-    SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE3,INT_EDGE_TRIGGER_RISING);
-    SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_3);
+    /*Setup the INT_SOURCE_EXTERNAL_2 and Enable it*/
+    SYS_INT_VectorPrioritySet(INT_VECTOR_INT2, INT_PRIORITY_LEVEL7);
+    SYS_INT_VectorSubprioritySet(INT_VECTOR_INT2, INT_SUBPRIORITY_LEVEL2);
+    SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE2,INT_EDGE_TRIGGER_RISING);
+    //SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_2);
 
 
 
