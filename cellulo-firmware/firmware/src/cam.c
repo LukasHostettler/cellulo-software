@@ -12,7 +12,7 @@
 #include <sys/attribs.h>
 #include "system_definitions.h"
 
-unsigned char pixels[IMG_WIDTH_WITH_BLANKING*IMG_HEIGHT_WITH_BLANKING + IMG_VERTICAL_BLANKING_EXTRA];
+unsigned char pixels[IMG_WIDTH*IMG_HEIGHT];
 bool frameReady;
 bool frameRequest;
 bool disableLineValid;
@@ -32,7 +32,7 @@ void APP_Cam_Initialize(){
     //Initialize image sensor
     MT9V034Reset();
     MT9V034OutputEnable(TRUE);
-    MT9V034SetBinning(MT9V034_BIN_4, MT9V034_BIN_4);
+    MT9V034SetBinning(MT9V034_BIN_2, MT9V034_BIN_2);
 }
 
 void APP_Cam_Tasks(){
@@ -41,32 +41,32 @@ void APP_Cam_Tasks(){
     if(frameReady && frameRequest){
         bluetoothSend(pixels, IMG_HEIGHT*IMG_WIDTH);
         frameRequest = false;
-        //PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_4);
-        //PLIB_INT_SourceEnable(INT_ID_0, INT_SOURCE_EXTERNAL_4);
     }
 }
 
-void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LINE_VALID_Handler(void){
-
-    if(!frameReady){
-        PLIB_DMA_ChannelXDestinationStartAddressSet(DMA_ID_0, DMA_CHANNEL_0, (uint32_t)&pixels[currentRow*IMG_WIDTH]);
-        PLIB_DMA_ChannelXEnable(DMA_ID_0, DMA_CHANNEL_0);
-
-        currentRow++;
-        if(currentRow >= IMG_HEIGHT){
-
-            //Frame finished here
-            frameReady = true;
-        }
-    }
-
+void __ISR(_EXTERNAL_3_VECTOR, IPL7AUTO) _LineStartHandler(void){
+    if(!frameReady)
+        DCH0CONSET = DCHCON_CHEN_MASK;
+    
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_3);
 }
 
-void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FRAME_VALID_Handler(void){
+void __ISR(_DMA0_VECTOR, ipl7AUTO) _LineFinishedHandler(void){
+    currentRow++;
+    if(currentRow >= IMG_HEIGHT)
+        frameReady = true;
+    else
+        DCH0DSA = ConvertToPhysicalAddress(&pixels[currentRow*IMG_WIDTH]);
 
+
+    DCH0INTCLR = 0x000000ff;
+    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_DMA_0);
+}
+
+void __ISR(_EXTERNAL_4_VECTOR, IPL7AUTO) _FrameStartHandler(void){
     if(!frameRequest){
         currentRow = 0;
+        DCH0DSA = ConvertToPhysicalAddress(pixels);
         frameReady = false;
     }
 

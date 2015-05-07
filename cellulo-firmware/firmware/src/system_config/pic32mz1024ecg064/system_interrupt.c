@@ -72,18 +72,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 
-void __ISR(_DMA0_VECTOR, ipl1AUTO) _IntHandlerSysDmaCh0(void)
-{
 
-
-    Nop();
-
-    /* Clear the interrupt flag */
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_DMA_0);
-
-    /* TODO: Add code as needed */
-
-}
 
 /*******************************************************************************
  End of File

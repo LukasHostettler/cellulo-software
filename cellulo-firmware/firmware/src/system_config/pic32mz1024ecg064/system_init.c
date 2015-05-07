@@ -275,17 +275,18 @@ void SYS_Initialize ( void* data )
 
 
 
-
-
-   /* DCH0INTbits.CHBCIE = 1;
-    DCH0INTbits.CHERIE = 1;
-
     SYS_INT_VectorPrioritySet(INT_VECTOR_DMA0, INT_PRIORITY_LEVEL7);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_DMA0, INT_SUBPRIORITY_LEVEL3);
     PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_DMA_0);
-    SYS_INT_SourceEnable(INT_SOURCE_DMA_0);*/
+    SYS_INT_SourceEnable(INT_SOURCE_DMA_0);
+    DCH0INTbits.CHBCIE = 1;
 
-    Nop();
+
+
+
+
+
+    
 
     /* Initialize Drivers */
     DRV_USART0_Initialize();
@@ -322,7 +323,7 @@ void SYS_Initialize ( void* data )
     SYS_INT_VectorPrioritySet(INT_VECTOR_INT2, INT_PRIORITY_LEVEL7);
     SYS_INT_VectorSubprioritySet(INT_VECTOR_INT2, INT_SUBPRIORITY_LEVEL2);
     SYS_INT_ExternalInterruptTriggerSet(INT_EXTERNAL_INT_SOURCE2,INT_EDGE_TRIGGER_RISING);
-    //SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_2);
+
 
 
 

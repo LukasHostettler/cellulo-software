@@ -50,32 +50,32 @@ inline void touchLedTest(){
     unsigned short red = 0xFFF, green = 0xFFF*2/5, blue = 0;
 
     if(ledTest[0])
-        setLED0(red, green, blue);
+        setLED0(0xFFF, 0, 0);
     else
         setLED0(0x000, 0x000, 0x000);
 
     if(ledTest[1])
-        setLED1(red, green, blue);
+        setLED1(0, 0xFFF, 0);
     else
         setLED1(0x000, 0x000, 0x000);
 
     if(ledTest[2])
-        setLED2(red, green, blue);
+        setLED2(0, 0, 0xFFF);
     else
         setLED2(0x000, 0x000, 0x000);
 
     if(ledTest[3])
-        setLED3(red, green, blue);
+        setLED3(0xFFF, 0xFFF, 0);
     else
         setLED3(0x000, 0x000, 0x000);
 
     if(ledTest[4])
-        setLED4(red, green, blue);
+        setLED4(0xFFF, 0, 0xFFF);
     else
         setLED4(0x000, 0x000, 0x000);
 
     if(ledTest[5])
-        setLED5(red, green, blue);
+        setLED5(0, 0xFFF, 0xFFF);
     else
         setLED5(0x000, 0x000, 0x000);
 
