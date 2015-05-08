@@ -101,6 +101,45 @@ void bluetoothSend(char* c, unsigned int n){
     }
 }
 
+void bluetoothSendHex(char* c, unsigned int n){
+    int k;
+    char high, low;
+    for(k=0;k<n;k++){
+
+        //Wait until transmitter buffer is available
+        while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+
+        //Wait until Bluetooth module is available
+        while(PLIB_PORTS_PinGet(PORTS_ID_0, BT_RTS_BAR_PORT_CHANNEL, BT_RTS_BAR_PORT_BIT_POS));
+
+        //Send high byte
+        high = ((unsigned char)c[k])/16 + 48; //0, 1, 2, 3, 4, 5, 6, 7, 8 or 9
+        if(high > 57) //A, B, C, D, E or F
+            high += 7;
+        PLIB_USART_TransmitterByteSend(USART_ID_4, high);
+
+        //Wait until transmitter buffer is available
+        while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+
+        //Wait until Bluetooth module is available
+        while(PLIB_PORTS_PinGet(PORTS_ID_0, BT_RTS_BAR_PORT_CHANNEL, BT_RTS_BAR_PORT_BIT_POS));
+
+        //Send low byte
+        low = ((unsigned char)c[k])%16 + 48; //0, 1, 2, 3, 4, 5, 6, 7, 8 or 9
+        if(low > 57) //A, B, C, D, E or F
+            low += 7;
+        PLIB_USART_TransmitterByteSend(USART_ID_4, low);
+
+        //Wait until transmitter buffer is available
+        while(PLIB_USART_TransmitterBufferIsFull(USART_ID_4));
+
+        //Wait until Bluetooth module is available
+        while(PLIB_PORTS_PinGet(PORTS_ID_0, BT_RTS_BAR_PORT_CHANNEL, BT_RTS_BAR_PORT_BIT_POS));
+
+        PLIB_USART_TransmitterByteSend(USART_ID_4, '\n');
+    }
+}
+
 void __ISR(_UART3_RX_VECTOR, ipl1AUTO) _BT_RX_Handler(void){
     btRxQueue[btRxQueueWriteIndex] = U3RXREG;
     btRxQueueWriteIndex = (btRxQueueWriteIndex + 1) % BT_RX_QUEUE_SIZE;

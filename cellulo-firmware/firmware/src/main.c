@@ -78,11 +78,11 @@ int main ( void )
 
     APP_BT_Initialize();
 
-    //APP_LED_Initialize();
+    APP_LED_Initialize();
 
     APP_Cam_Initialize();
 
-    //APP_Touch_Initialize();
+    APP_Touch_Initialize();
 
     SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_3);
     SYS_INT_SourceEnable(INT_SOURCE_EXTERNAL_4);
@@ -94,11 +94,11 @@ int main ( void )
 
         APP_BT_Tasks();
 
-        //APP_LED_Tasks();
+        APP_LED_Tasks();
 
         APP_Cam_Tasks();
 
-        //APP_Touch_Tasks();
+        APP_Touch_Tasks();
         
     }
 

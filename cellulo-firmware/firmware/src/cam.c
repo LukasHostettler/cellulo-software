@@ -39,7 +39,7 @@ void APP_Cam_Tasks(){
 
     //Consume frame
     if(frameReady && frameRequest){
-        bluetoothSend(pixels, IMG_HEIGHT*IMG_WIDTH);
+        bluetoothSendHex(pixels, IMG_HEIGHT*IMG_WIDTH);
         frameRequest = false;
     }
 }

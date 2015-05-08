@@ -86,6 +86,17 @@ typedef enum{
 void bluetoothSend(char* buf, unsigned int n);
 
 /**
+ * @brief Sends characters over Bluetooth as pure ASCII hex
+ *
+ * Converts all characters to two character hex representation, e.g 255 (single
+ * char) to "FF"
+ *
+ * @param buf Characters to send
+ * @param n Number of characters to send
+ */
+void bluetoothSendHex(char* buf, unsigned int n);
+
+/**
  * @brief initializes Bluetooth communication
  */
 void APP_BT_Initialize();
